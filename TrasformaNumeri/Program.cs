@@ -5,21 +5,21 @@ public class Program
 {
     public static string TrasformaNumeri(List<int> numeri)
     {
-        List<string> numeriTrasformati = new List<string>();
-
-        foreach (int numero in numeri)
+        List<string> numeriTrasformati = numeri.AsParallel().Select(numero =>
         {
+
             if (int.IsPositive(numero))
             {
                 int radiceQuadrataArrotondata = (int)Math.Round(Math.Sqrt(numero));
-                numeriTrasformati.Add(radiceQuadrataArrotondata.ToString());
+                return radiceQuadrataArrotondata.ToString();
             }
             else if (int.IsNegative(numero))
             {
-                int valoreAssolutoMoltiplicato = (Math.Abs(numero))*2;
-                numeriTrasformati.Add(valoreAssolutoMoltiplicato.ToString());
+                int valoreAssolutoMoltiplicato = (Math.Abs(numero)) * 2;
+                return valoreAssolutoMoltiplicato.ToString();
             }
-        }
+            return string.Empty;
+        }).ToList();
 
         numeriTrasformati.Reverse();
 
